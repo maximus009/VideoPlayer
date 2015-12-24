@@ -14,3 +14,4 @@ D/d: "Next" (Next frame) <br>
 A/a: "Prev" (Previous frame) <br>
 E/e: "Fast" (Increase playing speed) <br>
 Q/q: "Slow" (Decrease playing speed) <br>
+C/c: "Snap" (Screenshot feature)<br>
