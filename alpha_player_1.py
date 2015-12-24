@@ -1,4 +1,4 @@
-import cv2
+import cv2, numpy as np
 import sys
 from time import sleep
 
@@ -7,6 +7,11 @@ def flick(x):
 
 cv2.namedWindow('image')
 cv2.moveWindow('image',250,100)
+cv2.namedWindow('controls')
+cv2.moveWindow('controls',250,10)
+
+controls = np.zeros((50,750),np.uint8)
+cv2.putText(controls, "W/w: Play, S/s: Stay, A/a: Prev, D/d: Next, E/e: Fast, Q/q: Slow, Esc: Exit", (10,10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, 255)
 
 video = sys.argv[1] 
 cap = cv2.VideoCapture(video)
@@ -17,22 +22,19 @@ cv2.createTrackbar('S','image', 0,int(tots)-1, flick)
 cv2.setTrackbarPos('S','image',0)
 
 cv2.createTrackbar('F','image', 1, 100, flick)
-cv2.setTrackbarPos('F','image',30)
+frame_rate = 30
+cv2.setTrackbarPos('F','image',frame_rate)
 
 def process(im):
     return cv2.cvtColor(im, cv2.COLOR_BGR2GRAY)
 
 status = 'stay'
 
-control_pad = { ord('s'):'stay', ord('S'):'stay',
-                ord('w'):'play', ord('W'):'play',
-                ord('a'):'prev_frame', ord('A'):'prev_frame',
-                ord('d'):'next_frame', ord('D'):'next_frame',
-                ord('q'):'slow', ord('Q'):'slow',
-                ord('e'):'fast', ord('E'):'fast',
-                -1: status, 
-                27: 'exit'}
 while True:
+    
+  cv2.imshow("controls",controls)
+
+  
   try:
     if i==tots-1:
       i=0
@@ -43,6 +45,7 @@ while True:
     im = cv2.resize(im, dim, interpolation = cv2.INTER_AREA)
     if im.shape[0]>600:
         im = cv2.resize(im, (500,500))
+        controls = cv2.resize(controls, (im.shape[1],25))
     #cv2.putText(im, status, )
     cv2.imshow('image', im)
     status = { ord('s'):'stay', ord('S'):'stay',
