@@ -7,7 +7,7 @@ Contributions are welcome!
 To run the program: <br>
 
 <code> $ python alpha_player_1.py video_file.mp4 </code>
-<br>
+<br><br>
 W/w: "Play" <br>
 S/s: "Stay" (Pause) [I like keeping things rhyming!] <br>
 D/d: "Next" (Next frame) <br>
